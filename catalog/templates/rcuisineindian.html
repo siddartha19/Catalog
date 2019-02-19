@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style type="text/css">
+  	.header-top{
+		width: 100%;
+		height: 20px;
+		background-color: rgba(0,0,0,0.7);
+	}
+	.upic{
+  		float: right;
+  		margin-top: 5px;
+  		margin-right: 20px;
+  		border-radius: 50%;
+  		border: 2px solid black;
+  		width: 50px;
+  		height: 50px;
+  	}
+  	.cimg{
+  		float: right;
+  		margin-top: 5px;
+  		width: 50px;
+  		height: 50px;
+  		margin-right: 10px;
+  		border: 2px solid black;
+  		border-radius: 15px;
+  		padding: 5px;
+  	}
+	header{
+		text-overflow: none;
+		height: auto;
+		padding-top: 10px;
+		padding-bottom: 40px;
+		padding-left: 20px;
+		background-color: rgba(0,0,0,0.2);
+	}
+	.msg{
+		width: auto;
+		background-color: #7CFC00;
+		font-size: 20px;
+		height: auto;
+	}
+	.heading{
+		font-size: 60px;
+	}
+  	.rname{
+  		float: left;
+  		font-size: 35px;
+  		margin: 3%;
+  	}
+  	.rcuisine{
+  		float: right;
+  		font-size: 25px;
+  		margin: 4%;
+  	}
+  	.rrating{
+  		clear: both;
+  		float: left;
+  		font-size: 25px;
+  		margin: 4%;
+  	}
+  	.cnew{
+  		text-decoration: none;
+  		font-size: 25px;
+  		padding: 10px;
+  		margin: 0;
+  	}
+  	.lbtn{
+		font-size: 25px;
+		padding: 10px;
+		color: white;
+	}
+	.nbtn{
+		margin: 15px;
+		font-size: 25px;
+		width: 150px;
+		padding: 10px;
+	}
+	.btn-group,.btn-group:hover{
+		color: #4682B4;
+	}
+	a,a:hover{
+		text-decoration: none;
+		color: #4682B4;
+	}
+	.container{
+		margin-top: 50px;
+		width: 70%;
+		border: 5px solid rgba(0,0,0,0.3);
+		margin-bottom: 50px;
+		border-radius: 10px;
+	}
+	.row{
+		padding: 5px;
+		border : 1px solid rgba(0,0,0,0.3);
+	}
+	.row:hover{
+		background-color: rgba(0,0,0,0.1)
+	}
+  </style>
+
+  <script>
+	$(document).ready(function(){
+		 $('[data-toggle="tooltip"]').tooltip(); 
+	});
+  </script>
+
+</head>
+
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename = 'styles.css')}}">
+
+<body>
+
+{% if not name %}
+	<a href="{{url_for('showLogin') }}">
+		<button class="btn lbtn">Login</button>
+	</a>
+{% else %}
+	<a href="{{url_for('gdisconnect') }}">
+		<button class="btn lbtn">Logout</button>
+	</a>
+{% endif %}
+
+
+{% if name %}
+	<a href="{{url_for('showCart')}}">
+	<img class="cimg" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlz8lzPKDvLHC_xlou9dXw2S9e0x05ZgER8FDEK9IeUjx05QQm">
+	</a>
+	<img data-toggle="tooltip" data-placement="left" title="UserName : {{ name }}" class="upic" src="{{ picture }}">
+{% endif %}
+
+
+
+<div class="header-top"></div>
+<header>
+	<p class="heading">Hungry!</p>
+	{% if name %}
+	<a class="cnew" href="{{url_for('newRestaurants') }}">Create New Restaurant</a>
+	{% endif %}
+</header>
+<p class="msg text-center">
+	{% with messages = get_flashed_messages() %}
+  	 	{% if messages %}
+      		{% for message in messages %}
+         		{{ message }}
+      		{% endfor %}
+   		{% endif %}
+	{% endwith %}
+</p>
+
+<a href="{{ url_for('showRestaurants') }}"><button class="btn nbtn">All</button></a>
+<a href="{{ url_for('showTopRest') }}"><button class="btn nbtn">Top Rating</button></a>
+<div class="btn-group">
+    <button class="btn nbtn dropdown-toggle" data-toggle="dropdown">Cuisine <span class="caret"></span></button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="{{ url_for('showCuisineIndian') }}">Indian</a></li>
+      <li><a href="{{ url_for('showCuisineChinese') }}">Chinese</a></li>
+      <li><a href="{{ url_for('showCuisineAmerican') }}">American</a></li>
+    </ul>
+</div>
+
+
+
+
+<div class="container">
+	{% for i in restaurant %}
+		{% if i.cuisine=='Indian' %}
+			<a  href="{{url_for('restaurantMenu', restaurant_id = i.id) }}">
+				<div class="row">
+					<p class="rname">{{ i.name }}</p>
+					<p class="rrating">Rating: {{ i.rating }} Star</p>
+					<p class="rcuisine">Cuisine: {{ i.cuisine }}</p>
+				</div>
+			</a>
+		{% endif %}
+	{% endfor %}
+</div>
+
+
+
+
+</body>
+
+</html>

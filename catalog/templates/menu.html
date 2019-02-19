@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style type="text/css">
+  	.home{
+		font-size: 25px;
+		padding: 10px;
+	}
+	.cimg{
+  		float: right;
+  		margin-top: 5px;
+  		width: 50px;
+  		height: 50px;
+  		margin-right: 10px;
+  		border: 2px solid black;
+  		border-radius: 15px;
+  		padding: 5px;
+  	}
+	.header-top{
+		width: 100%;
+		height: 20px;
+		background-color: rgba(0,0,0,0.7);
+	}
+	header{
+		text-overflow: none;
+		height: auto;
+		padding-top: 10px;
+		padding-bottom: 20px;
+		padding-left: 20px;
+		background-color: rgba(0,0,0,0.2);
+	}
+	.msg{
+		width: auto;
+		background-color: #7CFC00;
+		font-size: 20px;
+		height: auto;
+	}
+  	.title{
+  		font-size: 60px;
+  		padding-bottom: 20px;
+  	}
+  	.uname{
+  		font-size: 20px;
+  		padding-right: 20px;
+  	}
+  	.dname{
+  		font-size: 20px;
+  	}
+  	.cnew{
+		font-size: 25px;
+		margin: 10px;
+	}
+	.container{
+		margin-bottom: 40px;
+	}
+  	.bstyle{
+  		margin: 15px;
+  		height: 220px;
+  		width: 350px;
+  		overflow: none;
+  		border: 1px solid rgba(0,0,0,0.2);
+  		padding: 10px;
+  	}
+  	.panel-body{
+  		margin-top: 10px;
+  		height: 120px;
+  	}
+  	.panel-footer{
+  		background-color: white;
+  		border-top: 0px;
+  		font-weight: bold;
+  	}
+  	.iname {
+  		font-weight: bold;
+  		font-size: 15px;
+    	float: left;
+	}
+	.iprice{
+		font-size: 15px;
+		font-weight: bold;
+		float: right;
+	}
+	.idescription{
+		clear: both;
+	}
+	.addtocart{
+		float: right;
+		clear: both;
+		font-weight: bold;
+	}
+	a,a:hover,a:active,a:visited{
+		text-decoration: none;
+	}
+   </style>
+
+   <script>
+		$(document).ready(function(){
+ 		 $('[data-toggle="tooltip"]').tooltip(); 
+		});
+	</script>
+
+</head>
+
+
+<body>
+
+
+<button class="btn home">
+	<a href="{{url_for('showRestaurants') }}">All Restaurants</a>
+</button>
+
+
+<a href="{{url_for('showCart')}}">
+	<img class="cimg" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlz8lzPKDvLHC_xlou9dXw2S9e0x05ZgER8FDEK9IeUjx05QQm">
+</a>
+
+
+<div class="header-top"></div>
+<header>
+	<p class="title">{{restaurant.name}}</p>
+	{% if user_id == creator.id %}
+		<a class="uname" href="{{url_for('editRestaurants', restaurant_id = restaurant.id) }}">Update Restaurant</a>
+		<a class="dname" href="{{url_for('deleteRestaurants', restaurant_id = restaurant.id) }}">Delete Restaurant</a>
+	{% endif %}
+</header>
+<p class="text-center msg">
+	{% with messages = get_flashed_messages() %}
+  	 	{% if messages %}
+      		{% for message in messages %}
+         		{{ message }}
+      		{% endfor %}
+   		{% endif %}
+	{% endwith %}
+</p>
+
+{% if user_id == creator.id %}
+	<button class="btn cnew">
+	<a href="{{url_for('newMenuItem', restaurant_id = restaurant.id) }}">Create Menu Item</a>
+	</button>
+{% endif %}
+
+<br>
+<br>
+
+
+
+<div class="container">
+
+	<div class="row">
+
+		{% for i in items %}
+
+			<div class="panel col-lg-3 col-md-4 bstyle">
+				<div class="panel-heading">
+						<span class="iname">{{i.name}}</span>
+						<span class="iprice">${{i.price}}</span>
+				</div>
+
+  				<div class="panel-body">
+  					<span class="idescription">{{i.description}}</span>
+  				</div>
+  				<div class="panel-footer">
+  					{% if user_id == creator.id %}
+	  					<a href= "{{url_for('editMenuItem', restaurant_id = restaurant.id, menu_id = i.id) }}">Edit</a>
+						<span> | </span>
+						<a href = "{{url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id = i.id ) }}">Delete</a>
+  					{% endif %}
+  					<a class="addtocart" href="{{url_for('addToCart', menu_id = i.id)}}">Add to cart</a>
+  				</div>
+			</div>
+
+
+		{% endfor %}
+
+	</div>
+
+</div>
+
+
+
+
+</body>
+
+</html>

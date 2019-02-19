@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CheckOut</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<style type="text/css">
+		.nbtn{
+			margin: 15px;
+			font-size: 25px;
+			width: 150px;
+			padding: 10px;
+		}
+		.mbox{
+			margin-top: 35vh;
+		}
+	</style>
+</head>
+<body>
+
+<div class="text-center mbox">
+	<h1>Order Complete</h1>
+	<h3>Your Bag of HUNGRY is on its way!</h3>
+	<a href="{{url_for('showRestaurants')}}"><button class="btn nbtn">Home</button></a>
+</div>
+
+</body>
+</html>

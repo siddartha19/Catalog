@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style type="text/css">
+  	button,button:hover{
+  		color: #4682B4;
+  	}
+  	a,a:hover{
+  		text-decoration: none;
+  	}
+  	.cbox{
+  		margin-left: 75vh;
+  		margin-top: 15vh;
+  	}
+  	.mhead{
+  		font-size: 50px;
+  		margin-bottom: 25px;
+  	}
+  	.text-center{
+  		margin-top: 15vh;
+  	}
+  	.form-group{
+  		margin-top: 30px;
+  		margin-bottom: 30px;
+  		font-size: 25px;
+  	}
+  	.sbtn{
+  		font-size: 20px;
+  		color: #4682B4;
+  		padding: 15px;
+  		width: 150px;
+  		margin-right: 20px;
+  		font-weight: bold;
+  	}
+  	.cbtn{
+  	  	font-size: 20px;
+  		color: #4682B4;
+  		padding: 15px;
+  		width: 150px;
+  		margin-left: 20px;
+  		font-weight: bold;
+  	}
+  </style>
+</head>
+
+<body>
+
+
+<div class="text-center">
+	<h1> Add New Menu Item To Restaurant </h1>
+	<form  action="{{url_for('newMenuItem', restaurant_id=restaurant_id )}}" method = 'POST'>
+		<div class="form-group">
+			<label for="name">Name:</label>
+			<input style="margin-left: 50px; padding: 5px;" type='text' size='20' name='name' placeholder="name" required>
+    </div>
+		<button class="btn sbtn" type='submit' value='Create'>Create</button>
+		<button class="btn cbtn"><a href='{{url_for("restaurantMenu", restaurant_id= restaurant_id)}}'>Cancel</a></button>
+	</form>
+</div>
+
+
+</body>
+</html>
